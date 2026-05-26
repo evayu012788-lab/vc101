@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楊婷羽 Ting-Yu Yang | AI 產品規劃與數位轉型顧問</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#005BAC',    // 科技深藍
+                        techblue: '#3D98D3',   // 未来藍
+                        mint: '#27C2C9',       // 智慧青綠
+                        accent: '#F5A623',     // 點綴亮橘
+                        slatecustom: '#223447',
+                        graycustom: '#556A82',
+                        bglight: '#F7F9FC',
+                        neutral: '#E8EDF4'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'float-delay': 'float 6s ease-in-out infinite 3s',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth fade-in on scroll triggers */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F9FC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E8EDF4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3D98D3;
+        }
+        /* Brand neutral overrides for Tailwind slate utilities */
+        .bg-slate-50 { background-color: #F7F9FC !important; }
+        .bg-slate-100 { background-color: #E8EDF4 !important; }
+        .border-slate-200 { border-color: #E8EDF4 !important; }
+        .border-slate-200\/50 { border-color: rgba(232, 237, 244, 0.5) !important; }
+        .border-slate-200\/60 { border-color: rgba(232, 237, 244, 0.6) !important; }
+        .border-slate-200\/80 { border-color: rgba(232, 237, 244, 0.8) !important; }
+        .text-slate-400 { color: #556A82 !important; }
+        .bg-slate-900 { background-color: #223447 !important; }
+        /* Grid background pattern */
+        .tech-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(61, 152, 211, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(61, 152, 211, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-bglight text-slatecustom font-sans overflow-x-hidden antialiased">
+
+    <!-- Interactive Particle Background Canvas -->
+    <canvas id="tech-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- Sticky Navigation Bar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Identity -->
+                <div class="flex items-center space-x-3">
+                    <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-techblue to-mint shadow-md shadow-blue-500/10">
+                        <span class="text-white font-black text-lg tracking-wider">Y</span>
+                        <div class="absolute -inset-1 rounded-xl bg-gradient-to-tr from-techblue to-mint opacity-20 blur-sm"></div>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-primary tracking-tight">楊婷羽 <span class="text-xs font-normal text-graycustom tracking-wider block sm:inline sm:ml-2">Ting-Yu Yang</span></span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#hero" class="text-sm font-medium text-slatecustom hover:text-techblue transition-colors duration-200">首頁</a>
+                    <a href="#about" class="text-sm font-medium text-slatecustom hover:text-techblue transition-colors duration-200">關於我</a>
+                    <a href="#ai-solutions" class="text-sm font-medium text-slatecustom hover:text-techblue transition-colors duration-200">AI 解決方案</a>
+                    <a href="#product-pm" class="text-sm font-medium text-slatecustom hover:text-techblue transition-colors duration-200">產品規劃</a>
+                    <a href="#why-me" class="text-sm font-medium text-slatecustom hover:text-techblue transition-colors duration-200">實戰價值</a>
+                    <a href="#target-clients" class="text-sm font-medium text-slatecustom hover:text-techblue transition-colors duration-200">適合對象</a>
+                    <a href="https://calendar.app.google/yhMF7AWJMT4QRykX8" target="_blank" class="px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-techblue transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-blue-500/10">
+                        預約諮詢
+                    </a>
+                </div>
+
+                <!-- Mobile Navigation Button (Hamburger) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-primary focus:outline-none" aria-label="Toggle Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon-hamburger" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-drawer" class="hidden md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-lg px-6 py-8 transition-all duration-300 z-40">
+            <div class="flex flex-col space-y-5">
+                <a href="#hero" class="mobile-link text-base font-medium text-slatecustom hover:text-techblue transition-colors py-2">首頁</a>
+                <a href="#about" class="mobile-link text-base font-medium text-slatecustom hover:text-techblue transition-colors py-2">關於我</a>
+                <a href="#ai-solutions" class="mobile-link text-base font-medium text-slatecustom hover:text-techblue transition-colors py-2">AI 解決方案</a>
+                <a href="#product-pm" class="mobile-link text-base font-medium text-slatecustom hover:text-techblue transition-colors py-2">產品規劃</a>
+                <a href="#why-me" class="mobile-link text-base font-medium text-slatecustom hover:text-techblue transition-colors py-2">實戰價值</a>
+                <a href="#target-clients" class="mobile-link text-base font-medium text-slatecustom hover:text-techblue transition-colors py-2">適合對象</a>
+                <a href="https://calendar.app.google/yhMF7AWJMT4QRykX8" target="_blank" class="w-full text-center py-3 rounded-lg bg-primary text-white font-semibold shadow-md">
+                    預約 AI 顧問諮詢
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen pt-32 pb-20 flex items-center justify-center tech-grid overflow-hidden">
+        <!-- Floating Ambient Blobs -->
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-emerald-400/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full z-10">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                <!-- Hero Info Column (Left) -->
+                <div class="lg:col-span-7 flex flex-col space-y-8 text-left">
+                    <!-- Credentials & Badges -->
+                    <div class="flex flex-wrap gap-2.5 items-center">
+                        <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-blue-50 border border-blue-200/50 text-techblue">
+                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            AI Solution Consultant
+                        </span>
+                        <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 border border-emerald-200/50 text-mint">
+                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                            PMP® Certified
+                        </span>
+                        <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-slate-100 border border-slate-200/50 text-primary">
+                            Product & Project
+                        </span>
+                    </div>
+
+                    <!-- Typewriter Main Title -->
+                    <div class="space-y-3">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-primary tracking-tight leading-[1.15]">
+                            <span id="typewriter" class="inline-block border-r-4 border-techblue pr-1 min-h-[1.2em]"></span>
+                        </h1>
+                        <!-- Traditional Subtitles -->
+                        <p class="text-lg sm:text-xl font-bold text-techblue tracking-wide mt-2">
+                            讓 AI 不只停留在工具，而是成為企業真正可落地的產品規劃與流程優化能力。
+                        </p>
+                    </div>
+
+                    <!-- Consultant Value Pitch -->
+                    <p class="text-base sm:text-lg text-graycustom leading-relaxed max-w-2xl">
+                        我是楊婷羽。協助企業透過精密導入 AI 工具、制定完備的產品規劃與精準專案管理，將零散的知識、龐雜的工作流程與使用者體驗，全面轉化為高效、具備高持續性的數位解決方案。
+                    </p>
+
+                    <!-- Call To Actions (Interactive Button with Hover Text Swap) -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <!-- Primary Booking Button -->
+                        <a href="https://calendar.app.google/yhMF7AWJMT4QRykX8" target="_blank" 
+                           class="cta-btn relative overflow-hidden px-8 py-4 rounded-xl border border-techblue/30 bg-white/95 backdrop-blur text-primary font-bold shadow-lg hover:shadow-emerald-500/10 hover:border-mint transition-all duration-300 flex items-center justify-center min-w-[240px] group">
+                            <!-- Background gradient flow -->
+                            <span class="absolute inset-0 bg-gradient-to-r from-blue-50 to-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <!-- Animated text block -->
+                            <span class="relative block text-center w-full transition-transform duration-300 group-hover:-translate-y-12">
+                                預約 AI 顧問諮詢
+                            </span>
+                            <span class="absolute block text-center w-full text-emerald-600 transition-transform duration-300 translate-y-12 group-hover:translate-y-0 font-bold">
+                                Status: Ready to Connect
+                            </span>
+                        </a>
+
+                        <!-- Secondary Anchor -->
+                        <a href="#ai-solutions" 
+                           class="px-8 py-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slatecustom font-semibold text-center transition-colors duration-300">
+                            查看服務項目
+                        </a>
+                    </div>
+
+                    <!-- Small Trust Indicator Badges -->
+                    <div class="pt-6 border-t border-slate-200/60 grid grid-cols-3 gap-4 max-w-lg">
+                        <div>
+                            <span class="block text-2xl font-bold text-primary">10+ Years</span>
+                            <span class="text-xs text-graycustom">跨產業專案實務</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-primary">PMP®</span>
+                            <span class="text-xs text-graycustom">國際專案管理師</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-primary">AI-Powered</span>
+                            <span class="text-xs text-graycustom">工作流落地優化</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Dashboard Representation Column (Right) -->
+                <div class="lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center">
+                    <!-- Glow effect underneath -->
+                    <div class="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-techblue to-mint opacity-10 blur-xl"></div>
+                    
+                    <!-- Beautiful SaaS Style Interactive Flow Mockup -->
+                    <div class="relative w-full max-w-md bg-white/75 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-2xl p-6 flex flex-col space-y-6 overflow-hidden animate-float-slow">
+                        <!-- Dashboard Top Bar -->
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-xs font-mono text-graycustom">ai-workflow-engine v2.4</span>
+                        </div>
+
+                        <!-- Mini Project Card 1: User Demands -->
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/50 flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="p-2 rounded-lg bg-blue-100 text-techblue">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-primary">商業需求 & 使用者情境</h4>
+                                    <p class="text-[10px] text-graycustom">13年跨產業背景淬煉</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-100/50 text-techblue font-medium">100% Align</span>
+                        </div>
+
+                        <!-- Connecting Arrow (Simulated) -->
+                        <div class="flex justify-center -my-2">
+                            <svg class="w-4 h-4 text-techblue animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                        </div>
+
+                        <!-- Mini Project Card 2: AI Automation Blueprint -->
+                        <div class="p-4 rounded-xl bg-gradient-to-r from-blue-50/50 to-emerald-50/50 border border-blue-100 flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="p-2 rounded-lg bg-emerald-100 text-mint">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-primary">AI 應用流程自動化</h4>
+                                    <p class="text-[10px] text-graycustom">RPA + AI 協作優化</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100/50 text-mint font-medium">Optimization +320%</span>
+                        </div>
+
+                        <!-- Connecting Arrow (Simulated) -->
+                        <div class="flex justify-center -my-2">
+                            <svg class="w-4 h-4 text-mint animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                        </div>
+
+                        <!-- Mini Project Card 3: PMP PM Delivery -->
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/50 flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="p-2 rounded-lg bg-indigo-100 text-indigo-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-primary">MVP 落地與嚴謹時程控制</h4>
+                                    <p class="text-[10px] text-graycustom">PMP® 專案精準推進</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-100/50 text-indigo-600 font-medium">On Track</span>
+                        </div>
+
+                        <!-- Micro Metrics Display -->
+                        <div class="pt-4 border-t border-slate-100 grid grid-cols-2 gap-4">
+                            <div class="text-center bg-slate-50/60 p-2 rounded-lg">
+                                <span class="block text-[10px] text-graycustom uppercase">專案掌握度</span>
+                                <span class="text-sm font-bold text-primary">100% 成功著陸</span>
+                            </div>
+                            <div class="text-center bg-slate-50/60 p-2 rounded-lg">
+                                <span class="block text-[10px] text-graycustom uppercase">轉型成效</span>
+                                <span class="text-sm font-bold text-mint">流程全自動化</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-24 bg-white/50 backdrop-blur-md relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-techblue">About Me</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-2">專業定位與核心理念</h2>
+                <div class="w-12 h-1 bg-techblue mx-auto mt-4 rounded-full"></div>
+                <p class="text-base text-graycustom mt-4">平衡商業目標、使用者體驗與落地資源，用產品與專案思維打造深具影響力的數位方案。</p>
+            </div>
+
+            <!-- Content Split Grid -->
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Profile Image & Abstract Skill Grid (Left) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center reveal">
+                    <div class="relative w-full max-w-sm aspect-square bg-gradient-to-br from-slate-100 to-blue-50/40 rounded-3xl border border-slate-200 p-8 flex flex-col justify-between shadow-xl">
+                        <!-- Top abstract details -->
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <span class="text-xs font-mono text-graycustom uppercase">Consultant Profile</span>
+                                <h3 class="text-xl font-extrabold text-primary">楊婷羽</h3>
+                                <p class="text-xs text-techblue">Ting-Yu Yang</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary font-mono text-xs font-bold">PMP</div>
+                        </div>
+
+                        <!-- Core Capabilities Progress Loops -->
+                        <div class="space-y-4 py-6">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>AI 工具導入與協作流程設計</span>
+                                    <span class="text-mint">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-gradient-to-r from-techblue to-mint h-full rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>產品企劃與商業需求分析</span>
+                                    <span class="text-techblue">90%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-techblue h-full rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>跨部門協作與利害關係人溝通</span>
+                                    <span class="text-primary">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-primary h-full rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer tags -->
+                        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/60">
+                            <span class="text-[10px] bg-slate-100 text-slatecustom px-2 py-1 rounded">13年跨界經驗</span>
+                            <span class="text-[10px] bg-blue-50 text-techblue px-2 py-1 rounded">軟體平台</span>
+                            <span class="text-[10px] bg-emerald-50 text-mint px-2 py-1 rounded">教育科技</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Narrative Column (Right) -->
+                <div class="lg:col-span-7 flex flex-col space-y-6 reveal">
+                    <h3 class="text-2xl font-bold text-primary">讓想法轉化為可落地、可推進、可創造價值的產品與專案</h3>
+                    
+                    <p class="text-base text-graycustom leading-relaxed">
+                        我擁有 <strong>13 年</strong> 跨產業專案與產品推動經驗，並持有 <strong>PMP 國際專案管理師</strong> 證照。職涯歷程橫跨軟體平台、網路媒合、教育科技與數位產品推廣。我擅長在使用者需求、商業目標與執行資源之間取得微妙平衡。
+                    </p>
+                    
+                    <p class="text-base text-graycustom leading-relaxed">
+                        我相信，<strong>好的產品不只是功能堆疊，而是能為企業和使用者解決真實問題、優化流程並提升體驗。</strong> 過去，我參與多項數位平台建置與教育科技導入專案，累積了深厚的需求分析、時程控管、利害關係人溝通及高完成度的落地執行能力。
+                    </p>
+
+                    <p class="text-base text-graycustom leading-relaxed">
+                        面對快速變動的技術浪潮，我持續專注於 <strong>AI 工具</strong>、<strong>數位轉型</strong> 與 <strong>產品創新應用</strong>。我擅長利用 AI 工具重塑團隊流程，排除重複性工作、提升生產力，把科技真正落實為企業內部的核心競爭力。
+                    </p>
+
+                    <!-- Quote Block -->
+                    <div class="p-5 border-l-4 border-techblue bg-slate-50 rounded-r-xl">
+                        <p class="text-sm font-medium text-slatecustom italic">
+                            「我不只協助企業認識 AI 工具，更重視如何讓 AI 真正融入日常工作流程，建立可複製、可管理、可持續優化的團隊實力。」
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Solutions Section -->
+    <section id="ai-solutions" class="py-24 bg-slate-50 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-mint">AI Solutions</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-2">AI 解決方案與流程優化服務</h2>
+                <div class="w-12 h-1 bg-mint mx-auto mt-4 rounded-full"></div>
+                <p class="text-base text-graycustom mt-4">協助團隊跨越 AI 認知鴻溝，建構深度自動化與高效 AI 協作模式。</p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1: AI Education -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techblue flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">企業內部 AI 教育訓練</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            針對企業團隊客製化設計 AI 工作思維與應用課程。包含 Prompt Engineering 技巧、協作心態建立，確保全員具備科技轉型基本功。
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-techblue">賦能團隊</span>
+                        <span class="text-[11px] bg-blue-50 text-techblue px-2.5 py-0.5 rounded-full font-medium">建立共識</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: AI Tools Integration -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-mint flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">AI 工具導入與情境設計</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            針對客服、行銷、產品等具體崗位，進行 AI 工具（如 LLM、圖像生成等）精準導入與應用場景定義，消除軟體堆疊的摩擦力。
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-mint">降本增效</span>
+                        <span class="text-[11px] bg-emerald-50 text-mint px-2.5 py-0.5 rounded-full font-medium">場景定義</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Workflow Automation -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">工作流程自動化導入</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            整合雲端協作軟體，串接 AI 與自動化工具（如 Zapier, Make 等），串連各系統，使數據自動傳遞，擺脫低產值重複勞動。
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-purple-600">無縫串接</span>
+                        <span class="text-[11px] bg-purple-50 text-purple-600 px-2.5 py-0.5 rounded-full font-medium">數位流動</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: RPA Planning -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">RPA 應用與自動化規劃</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            針對有大量跨系統、定時定量輸入工作的部門，規劃流程機器人（RPA）部署情境，顯著減少人為錯誤，提升運算精度。
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-amber-600">消滅手動</span>
+                        <span class="text-[11px] bg-amber-50 text-amber-600 px-2.5 py-0.5 rounded-full font-medium">高精準度</span>
+                    </div>
+                </div>
+
+                <!-- Card 5: SOP Standardization -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">標準化作業流程 SOP 建立</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            將抽象的人工決策與操作步驟，淬煉成清楚、可管理的結構化標準 SOP，搭配 AI 協作手冊，讓新進員工能在極短時間上手。
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-indigo-600">知識留存</span>
+                        <span class="text-[11px] bg-indigo-50 text-indigo-600 px-2.5 py-0.5 rounded-full font-medium">結構規範</span>
+                    </div>
+                </div>
+
+                <!-- Card 6: AI Collaboration Blueprint -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">團隊 AI 協作模式建立</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            重塑團隊的數位工作流。優化跨部門協同作戰機制，提煉集體數位化潛能，縮短產品迭代與決策週期，建立具科技韌性的文化。
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-rose-600">韌性管理</span>
+                        <span class="text-[11px] bg-rose-50 text-rose-600 px-2.5 py-0.5 rounded-full font-medium">高效率協同</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROI Summary Section -->
+            <div class="mt-16 p-8 bg-gradient-to-r from-primary to-slate-800 rounded-2xl text-white shadow-xl flex flex-col md:flex-row justify-between items-center gap-6 reveal">
+                <div class="space-y-2">
+                    <h4 class="text-xl font-bold">預期轉型成效預估</h4>
+                    <p class="text-slate-300 text-sm max-w-2xl">
+                        經由精密診斷與導入，平均可協助企業降低 40% 的重複性作業成本、建立客製化的 AI 協作工具鏈，讓全體成員數位生產力大幅跃升。
+                    </p>
+                </div>
+                <a href="https://calendar.app.google/yhMF7AWJMT4QRykX8" target="_blank" class="px-6 py-3.5 bg-accent hover:bg-[#d78b18] text-white font-semibold rounded-xl text-sm transition-all shadow-lg hover:shadow-orange-500/20 whitespace-nowrap">
+                    開始規劃 AI 解決方案
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Planning and Project Management Section -->
+    <section id="product-pm" class="py-24 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-techblue">Product & Project</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-2">產品規劃與專案推動心法</h2>
+                <div class="w-12 h-1 bg-techblue mx-auto mt-4 rounded-full"></div>
+                <p class="text-base text-graycustom mt-4">透過嚴謹的 PMP 專案生命週期與敏捷產品思維，確保想法確實落地，化為市場價值。</p>
+            </div>
+
+            <!-- Visualization Flow (Stepper) -->
+            <div class="relative mt-12">
+                <!-- Desktop Connection Line -->
+                <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-blue-100 via-emerald-100 to-blue-100 transform -translate-y-1/2 z-0"></div>
+
+                <div class="grid lg:grid-cols-5 gap-8 relative z-10">
+                    <!-- Phase 1 -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group reveal">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-techblue flex items-center justify-center font-extrabold text-lg mb-4 group-hover:scale-110 transition-transform">01</div>
+                        <span class="text-xs font-extrabold text-techblue uppercase tracking-widest">Stage 1</span>
+                        <h3 class="text-lg font-bold text-primary mt-1 mb-2">Discover 需求探勘</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            深度訪談與溝通，準確定義核心痛點、理清使用者真實需求與情境，找出最具價值的切入點。
+                        </p>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group reveal">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-techblue flex items-center justify-center font-extrabold text-lg mb-4 group-hover:scale-110 transition-transform">02</div>
+                        <span class="text-xs font-extrabold text-techblue uppercase tracking-widest">Stage 2</span>
+                        <h3 class="text-lg font-bold text-primary mt-1 mb-2">Define 範圍定義</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            確定產品商業戰略與具體目標、梳理功能核心範疇，聚焦定義最具價值的 MVP（最小可行性產品）。
+                        </p>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group reveal">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 text-mint flex items-center justify-center font-extrabold text-lg mb-4 group-hover:scale-110 transition-transform">03</div>
+                        <span class="text-xs font-extrabold text-mint uppercase tracking-widest">Stage 3</span>
+                        <h3 class="text-lg font-bold text-primary mt-1 mb-2">Design 流程設計</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            設計直覺流暢的操作流程、撰寫清晰的 PRD 規格文件，打造滿足深度使用者體驗的流程架構。
+                        </p>
+                    </div>
+
+                    <!-- Phase 4 -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group reveal">
+                        <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-extrabold text-lg mb-4 group-hover:scale-110 transition-transform">04</div>
+                        <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-widest">Stage 4</span>
+                        <h3 class="text-lg font-bold text-primary mt-1 mb-2">Deliver 專案推進</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            遵循 PMP 嚴謹時程控管、規劃開發迭代與敏捷推進，建立無障礙的跨部門與利害關係人協作。
+                        </p>
+                    </div>
+
+                    <!-- Phase 5 -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group reveal">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 text-mint flex items-center justify-center font-extrabold text-lg mb-4 group-hover:scale-110 transition-transform">05</div>
+                        <span class="text-xs font-extrabold text-mint uppercase tracking-widest">Stage 5</span>
+                        <h3 class="text-lg font-bold text-primary mt-1 mb-2">Optimize 持續迭代</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            收集上線後反饋、追蹤成效數據與使用者行為，進行有憑有據的產品改版，達到最大化營運效益。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Method explanation -->
+            <div class="mt-16 bg-slate-50/60 border border-slate-200/50 rounded-2xl p-8 lg:p-10 reveal">
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h4 class="text-xl font-bold text-primary">讓創新不只停留在概念，而是具備可追蹤性的落地產出</h4>
+                        <p class="text-sm text-graycustom mt-4 leading-relaxed">
+                            好的點子如果缺乏精準執行，就只是空中樓閣。在 13 年的專案累積中，我整合了<strong>「敏捷產品企劃（Agile Product Mindset）」</strong>與<strong>「嚴格瀑布時程控制（PMP Standard）」</strong>。
+                        </p>
+                        <p class="text-sm text-graycustom mt-3 leading-relaxed">
+                            我們在前期保留最大的靈活性探索價值，在中後期執行則追求時程與預算的極致掌控。同時，我們也會將 AI 工作流程導入其中，讓開發與測試階段產能極速釋放。
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="p-1 rounded bg-blue-100 text-techblue mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-primary">拒絕冗餘開發，直指核心價值</h5>
+                                <p class="text-xs text-graycustom mt-0.5">準確聚焦核心價值，用最快的速度與最適當的成本測試市場反應，縮短開發週期。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="p-1 rounded bg-blue-100 text-techblue mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-primary">跨領域利害關係人對齊機制</h5>
+                                <p class="text-xs text-graycustom mt-0.5">化解技術、商業、行銷團隊間的認知隔閡，將專案規格翻譯成各部門能迅速理解的語言。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="p-1 rounded bg-blue-100 text-techblue mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-primary">持續改進的飛輪架構</h5>
+                                <p class="text-xs text-graycustom mt-0.5">上線並非終點，結合數據分析工具，建立「追蹤-診斷-改進」的閉環產品演進系統。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Work With Me (Value Proposition) Section -->
+    <section id="why-me" class="py-24 bg-slate-50 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-techblue">Strategic Value</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-2">合作實戰價值</h2>
+                <div class="w-12 h-1 bg-techblue mx-auto mt-4 rounded-full"></div>
+                <p class="text-base text-graycustom mt-4">為什麼你該選擇楊婷羽？我們不談空泛概念，專注於為企業帶來扎實的變革與核心效益。</p>
+            </div>
+
+            <!-- Value Grid -->
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Value 1 -->
+                <div class="flex space-x-4 p-6 bg-white rounded-2xl border border-slate-200/50 shadow-sm reveal">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-50 text-techblue flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-primary mb-2">商業目標與使用者需求深度整合</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            產品的成功在於為企業賺取利潤，同時為用戶提供真實價值。13年的經驗讓我能透徹分析核心市場，拒絕做無效且無人使用的功能堆疊，精準規劃符合長期戰略的優質產品。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="flex space-x-4 p-6 bg-white rounded-2xl border border-slate-200/50 shadow-sm reveal">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-50 text-mint flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-primary mb-2">產品規劃與專案執行並重</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            許多顧問只給點子，不給方法。我憑藉 PMP 嚴謹的專案控管能力，提供從「創意探索」到「規格細化」、「開發排程控管」、「上線驗收」的完整一條龍服務，落實真正的「高執行力」。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="flex space-x-4 p-6 bg-white rounded-2xl border border-slate-200/50 shadow-sm reveal">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-primary mb-2">AI 導入重塑工作流，不只是一堂課</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            教軟體怎麼按誰都會，但「改變日常工作習慣」才是挑戰。我設計的 AI 解決方案，會深入團隊的痛點場景，建立具體的 AI 與自動化協作 SOP，建立長久、不隨人員異動而消失的集體能力。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="flex space-x-4 p-6 bg-white rounded-2xl border border-slate-200/50 shadow-sm reveal">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-primary mb-2">可落地、可管理、可持續優化為核心</h3>
+                        <p class="text-sm text-graycustom leading-relaxed">
+                            我們導入的任何工具與管理系統，其標準都是「最少摩擦、最高產出」。不提倡複雜冗長的繁複工具，堅持用最直覺的自動化和專案看板，讓團隊運作越滾越順，實現可持續性優化。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Belief Block -->
+            <div class="mt-16 text-center max-w-4xl mx-auto p-8 bg-white border border-slate-200/80 rounded-2xl shadow-sm reveal">
+                <p class="text-base text-slatecustom leading-relaxed font-medium">
+                    "我不只協助企業認識 AI 工具，更重視如何讓 AI 真正進入日常工作流程，形成可複製、可管理、可持續優化的團隊能力。"
+                </p>
+                <span class="block text-xs font-bold text-techblue uppercase tracking-wider mt-4">— 楊婷羽 專業信念</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Suitable Clients Section -->
+    <section id="target-clients" class="py-24 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-mint">Collaboration Fit</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-2">適合找我合作的對象</h2>
+                <div class="w-12 h-1 bg-mint mx-auto mt-4 rounded-full"></div>
+                <p class="text-base text-graycustom mt-4">如果您正面臨以下挑戰，我將會是您最合適、能給予具體落地戰略的協作夥伴。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Target 1 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/60 shadow-sm flex flex-col justify-between reveal">
+                    <div class="space-y-3">
+                        <div class="text-techblue">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">想導入 AI 工具但無從起步的企業</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            市面上工具五花八門，不知哪款適合自身團隊。我們協助你盤點日常操作流程，精選性價比最高、契合業務場景的工具，制定無痛導入計畫。
+                        </p>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-techblue tracking-widest mt-6 block">對齊場景 ➔ 成功破局</span>
+                </div>
+
+                <!-- Target 2 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/60 shadow-sm flex flex-col justify-between reveal">
+                    <div class="space-y-3">
+                        <div class="text-techblue">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">需要建立內部 AI 使用 SOP 的團隊</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            個別成員雖有嘗試使用 AI，但缺乏標準化 SOP 規範，導致知識無法累積。我們幫你撰寫專屬指令範本與操作手冊，使生產力全體標準化。
+                        </p>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-techblue tracking-widest mt-6 block">沉澱範式 ➔ 全員賦能</span>
+                </div>
+
+                <!-- Target 3 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/60 shadow-sm flex flex-col justify-between reveal">
+                    <div class="space-y-3">
+                        <div class="text-techblue">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17" /></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">急需優化高重複性工作流程的部門</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            大量耗費人工的報表、對帳、跨系統貼上、客服回覆，阻礙團隊聚焦高價值戰略。我們為你規劃精準的 RPA 與自動化工具流，將日常重複性勞動徹底解放。
+                        </p>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-techblue tracking-widest mt-6 block">重組流程 ➔ 人力高產</span>
+                </div>
+
+                <!-- Target 4 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/60 shadow-sm flex flex-col justify-between reveal">
+                    <div class="space-y-3">
+                        <div class="text-mint">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">有產品想法但缺乏規劃與落地策略的團隊</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            空有核心戰略，但苦於技術細節不明、開發資源稀少、時程失控。我們幫你梳理高轉化率 MVP 規格、細化 PRD，嚴密控管專案里程碑，確保穩定上線。
+                        </p>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-mint tracking-widest mt-6 block">產品思維 ➔ 精準交付</span>
+                </div>
+
+                <!-- Target 5 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/60 shadow-sm flex flex-col justify-between reveal">
+                    <div class="space-y-3">
+                        <div class="text-mint">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">需要產品、專案與跨部門協作支持的企業</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            面臨專案範疇膨脹、跨部門溝通卡關。我將以 PMP 專業經理人角色，代入第三方客觀觀點，有效對齊跨部門認知，排除阻礙，使專案順暢運行。
+                        </p>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-mint tracking-widest mt-6 block">資源整合 ➔ 高效溝通</span>
+                </div>
+
+                <!-- Target 6 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/60 shadow-sm flex flex-col justify-between reveal">
+                    <div class="space-y-3">
+                        <div class="text-mint">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">渴望提升數位轉型效率的中小企業主管</h3>
+                        <p class="text-xs text-graycustom leading-relaxed">
+                            身負數位轉型績效壓力，但內部資源有限。我為你量身精剪出快速見效、不需高額程式客製費用的低代碼自動化變革，實現漸進式輕量轉型。
+                        </p>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-mint tracking-widest mt-6 block">低代碼轉型 ➔ 精省成本</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Product Solution Cards -->
+    <section class="py-20 bg-slate-100 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="max-w-3xl mx-auto text-center mb-12 reveal">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-techblue">核心產品解決方案</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-2">產品規劃專案成果連結</h2>
+                <p class="text-base text-graycustom mt-4">以下三個案例展示我在媒合平台、教育科技與產品行銷領域的實務成果。</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 reveal">
+                <a href="https://drive.google.com/file/d/1dxMcQpFgyhTJl6u9BbA49T-VYbVnKd11/view?usp=drive_link" target="_blank" class="group block rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-2xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-5 text-lg">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">產品規劃1</h3>
+                    <p class="text-sm text-graycustom leading-relaxed">專案成果_媒合平台</p>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1XybubUKJlNxxvgnz32acdNYRWvCXz5fR/view?usp=sharing" target="_blank" class="group block rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-2xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-5 text-lg">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">產品規劃2</h3>
+                    <p class="text-sm text-graycustom leading-relaxed">專案成果_教育科技</p>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1uz0lgLm8Lj9XLNUch9mGZM4S5EqMuUvh/view?usp=sharing" target="_blank" class="group block rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-2xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-5 text-lg">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">產品規劃3</h3>
+                    <p class="text-sm text-graycustom leading-relaxed">專案成果_產品行銷</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dependency-style Social Links and Contact Form Section -->
+    <section class="py-20 bg-slate-100 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-10 items-start">
+                <div class="space-y-6 reveal">
+                    <div>
+                        <span class="text-xs font-extrabold uppercase tracking-widest text-techblue">外部依賴庫</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mt-3">多元社群與資源連結</h2>
+                        <p class="text-base text-graycustom mt-4">以下連結以依賴庫風格呈現，讓訪客清楚看到核心社群與專業渠道。</p>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <a href="https://aistudy.pse.is/linemdsgroup" target="_blank" class="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-5 text-slate-700 hover:border-teal-500 hover:text-teal-500 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center mb-3 text-lg shadow-sm">
+                                <i class="fa-brands fa-line"></i>
+                            </div>
+                            <span class="text-sm font-semibold">LINE</span>
+                        </a>
+                        <a href="https://www.facebook.com/MarketingDataScienceTMR/" target="_blank" class="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-5 text-slate-700 hover:border-blue-600 hover:text-blue-600 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center mb-3 text-lg shadow-sm">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </div>
+                            <span class="text-sm font-semibold">Facebook</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/eva-yang-94b966179/" target="_blank" class="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-5 text-slate-700 hover:border-sky-700 hover:text-sky-700 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-sky-700 text-white flex items-center justify-center mb-3 text-lg shadow-sm">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </div>
+                            <span class="text-sm font-semibold">LinkedIn</span>
+                        </a>
+                        <a href="https://github.com/HowardNTUST" target="_blank" class="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-5 text-slate-700 hover:border-slate-900 hover:text-slate-900 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-3 text-lg shadow-sm">
+                                <i class="fa-brands fa-github"></i>
+                            </div>
+                            <span class="text-sm font-semibold">GitHub</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <span class="text-xs font-semibold uppercase tracking-widest text-mint">填寫需求表單</span>
+                                <h3 class="mt-3 text-2xl font-bold text-primary">立即提交您的專案需求</h3>
+                            </div>
+                            <div class="text-3xl text-techblue">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-graycustom leading-relaxed mb-8">請填寫需求表單，讓我快速了解您的專案目標、痛點與預期成果。我會在收到後盡速與您聯繫。</p>
+                        <a href="https://forms.gle/CEDqMrBXExooDv3z7" target="_blank" class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-sm font-bold text-white shadow-lg shadow-accent/20 hover:bg-[#d78b18] transition-all duration-300">
+                            前往填寫需求表單
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Booking Section -->
+    <section class="py-24 bg-gradient-to-br from-primary via-slate-900 to-primary text-white relative overflow-hidden z-10">
+        <!-- Floating background glowing orb -->
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-techblue/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-mint/10 rounded-full blur-3xl"></div>
+
+        <div class="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 text-center relative z-10 space-y-8 reveal">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-mint bg-mint/10 px-4 py-1.5 rounded-full">Let's Connect</span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight max-w-3xl mx-auto">
+                Ready to turn AI ideas into practical workflows?
+            </h2>
+            <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                讓 AI 應用不只停留在想法，而是成為可以推進、管理與持續優化的具體行動方案。我們的一對一策略諮詢將協助您理清業務瓶頸，並提供精準的 AI 工作流優化地圖。
+            </p>
+
+            <div class="pt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <!-- Conversion booking CTA with dynamic status swap -->
+                <a href="https://calendar.app.google/yhMF7AWJMT4QRykX8" target="_blank" 
+                   class="cta-btn relative overflow-hidden px-8 py-4 rounded-xl bg-white text-primary font-bold shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 flex items-center justify-center min-w-[260px] group">
+                    <span class="absolute inset-0 bg-gradient-to-r from-emerald-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span class="relative block text-center w-full transition-transform duration-300 group-hover:-translate-y-12">
+                        預約 AI 顧問諮詢
+                    </span>
+                    <span class="absolute block text-center w-full text-emerald-600 transition-transform duration-300 translate-y-12 group-hover:translate-y-0 font-bold">
+                        Book a Strategy Call
+                    </span>
+                </a>
+            </div>
+
+            <!-- Supporting indicators -->
+            <div class="pt-8 border-t border-slate-800 flex flex-wrap justify-center gap-8 text-xs text-slate-400">
+                <span class="flex items-center"><svg class="w-4 h-4 mr-1.5 text-mint" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg> 1對1專屬客製化諮詢</span>
+                <span class="flex items-center"><svg class="w-4 h-4 mr-1.5 text-mint" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg> 釐清核心痛點與切入點</span>
+                <span class="flex items-center"><svg class="w-4 h-4 mr-1.5 text-mint" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg> 初步高回報率自動化指引</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-primary text-slate-300 pt-16 pb-8 border-t border-slate-800 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="grid md:grid-cols-12 gap-12 pb-12 border-b border-slate-800">
+                <!-- Bio & Brand Info -->
+                <div class="md:col-span-6 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-techblue to-mint flex items-center justify-center text-white font-extrabold">Y</div>
+                        <span class="text-base font-bold text-white tracking-tight">楊婷羽 Yang Ting-Yu</span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-md leading-relaxed">
+                        提供跨領域、全方位的 AI 解決方案與流程優化導入。將 13 年軟體與專案經驗精煉融合，攜手企業在數位浪潮中，精準、無痛地打造高效智能的工作系統。
+                    </p>
+                    <div class="flex space-x-2">
+                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">PMP® 證照編號 #3002246</span>
+                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">AI 數位流程架構師</span>
+                    </div>
+                </div>
+
+                <!-- Footer Site Navigation Links -->
+                <div class="md:col-span-3 space-y-4">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">網站地圖</h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <a href="#hero" class="hover:text-white transition-colors">首頁</a>
+                        <a href="#about" class="hover:text-white transition-colors">關於我</a>
+                        <a href="#ai-solutions" class="hover:text-white transition-colors">AI 解決方案</a>
+                        <a href="#product-pm" class="hover:text-white transition-colors">產品規劃</a>
+                        <a href="#why-me" class="hover:text-white transition-colors">實戰價值</a>
+                        <a href="#target-clients" class="hover:text-white transition-colors">適合對象</a>
+                    </div>
+                </div>
+
+                <!-- Footer Quick CTA Actions -->
+                <div class="md:col-span-3 space-y-4">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">立即行動</h4>
+                    <p class="text-xs text-slate-400">
+                        點擊下方按鈕，直接在 Google Calendar 預訂最合適的時間。
+                    </p>
+                    <a href="https://calendar.app.google/yhMF7AWJMT4QRykX8" target="_blank" class="block w-full text-center py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-lg transition-colors border border-slate-700">
+                        預約 AI 顧問諮詢
+                    </a>
+                </div>
+            </div>
+
+            <!-- Copyright Block -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+                <span>© 2026 Yang Ting-Yu. All rights reserved. 版權所有。</span>
+                <div class="flex space-x-6">
+                    <span class="text-[11px] text-slate-400">AI Solution Consultant / Product Planning / Project Management</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Page Logic JavaScript Controls -->
+    <script>
+        // ----------------- DYNAMIC PARTICLES ENGINE -----------------
+        const canvas = document.getElementById('tech-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce walls gently
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(59, 130, 246, 0.25)'; // faint tech blue particles
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(width / 15), 65); // adapt count based on screen size
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw lines connecting close particles
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(59, 130, 246, ${0.08 * (1 - dist/130)})`; // fading tech connections
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize particles background on load
+        initParticles();
+        animateParticles();
+
+        // ----------------- TYPEWRITER EFFECT -----------------
+        const typewriterEl = document.getElementById('typewriter');
+        const textToType = "Until AI-Powered Product Planning Becomes Common Sense";
+        let charIndex = 0;
+        let isTyping = true;
+
+        function handleTypewriter() {
+            if (isTyping) {
+                if (charIndex < textToType.length) {
+                    typewriterEl.textContent += textToType.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(handleTypewriter, 70); // Typingspeed
+                } else {
+                    // Stay fully typed for a long period
+                    isTyping = false;
+                    setTimeout(handleTypewriter, 4500);
+                }
+            } else {
+                // Erase slowly
+                if (charIndex > 0) {
+                    typewriterEl.textContent = textToType.substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(handleTypewriter, 30);
+                } else {
+                    isTyping = true;
+                    setTimeout(handleTypewriter, 500);
+                }
+            }
+        }
+        
+        // Start typewriter
+        setTimeout(handleTypewriter, 1000);
+
+
+        // ----------------- MOBILE MENU DRAWER -----------------
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const hamburgerIcon = document.getElementById('menu-icon-hamburger');
+        const closeIcon = document.getElementById('menu-icon-close');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleDrawer() {
+            const isHidden = mobileDrawer.classList.contains('hidden');
+            if (isHidden) {
+                mobileDrawer.classList.remove('hidden');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileDrawer.classList.add('hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleDrawer);
+
+        // Close drawer when clicking nav links
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            });
+        });
+
+
+        // ----------------- SCROLL HANDLING & INTERSECTION OBSERVER -----------------
+        const navbar = document.getElementById('navbar');
+
+        // Sticky Navbar styling on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'border-slate-200/50');
+                navbar.classList.remove('border-transparent');
+            } else {
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'border-slate-200/50');
+                navbar.classList.add('border-transparent');
+            }
+        });
+
+        // Intersection Observer for Scroll Animation Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
