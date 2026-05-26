@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eva-AIMV 聯絡表單 - 嵌入版</title>
+  <style>
+    body{font-family: "Noto Sans", Roboto, Arial, sans-serif;margin:0;background:#f7f7fb;color:#222}
+    .container{max-width:980px;margin:36px auto;padding:24px;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(13,26,60,0.08)}
+    .header{display:flex;align-items:center;gap:16px}
+    .logo{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,#5746e3,#7b61ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    h1{margin:0;font-size:1.25rem}
+    .description{margin-top:8px;color:#555}
+    .iframe-wrap{position:relative;margin-top:18px}
+    .responsive-iframe{width:100%;height:800px;border:0;border-radius:6px;box-shadow:0 4px 12px rgba(16,24,40,0.06)}
+    .actions{margin-top:12px;display:flex;gap:8px;align-items:center}
+    .btn{display:inline-block;padding:10px 14px;background:#5746e3;color:#fff;border-radius:6px;text-decoration:none}
+    .note{margin-top:12px;color:#666;font-size:0.92rem}
+    @media(max-width:640px){.container{margin:16px;padding:16px}.responsive-iframe{height:700px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">EA</div>
+      <div>
+        <h1>Eva-AIMV 聯絡表單（嵌入）</h1>
+        <div class="description">在此頁面內直接填寫 Google 表單，或點選下方按鈕於新分頁開啟原表單。</div>
+      </div>
+    </div>
+
+    <div class="iframe-wrap" aria-hidden="false">
+      <iframe class="responsive-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfO1UfARZ4Q-9F5hACcN1M1eiD-TmgJFV8qj4QSMTIqf2stjA/viewform?embedded=true" title="Eva-AIMV 聯絡表單"></iframe>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfO1UfARZ4Q-9F5hACcN1M1eiD-TmgJFV8qj4QSMTIqf2stjA/viewform" target="_blank" rel="noopener">在新分頁開啟表單</a>
+      <a href="mailto:evayu012788@gmail.com">聯絡表單擁有者</a>
+    </div>
+
+    <div class="note">備註：若表單無法顯示，請確認瀏覽器允許 iframe 或直接開啟原表單。</div>
+  </div>
+</body>
+</html>

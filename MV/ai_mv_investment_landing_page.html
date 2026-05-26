@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI MV Studio｜AI MV 製作招商網站</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons for high tech look -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --dark: #070A12;
+      --blue: #38BDF8;
+      --violet: #8B5CF6;
+      --cyan: #22D3EE;
+      --gold: #F5C76B;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      color: #F8FAFC;
+      background: #070A12;
+      overflow-x: hidden;
+    }
+
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      background: #050816;
+    }
+
+    .hero-video-wrap iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.77777778vh;
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 56.25vw;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(56, 189, 248, 0.24), transparent 28%),
+        radial-gradient(circle at 78% 22%, rgba(139, 92, 246, 0.20), transparent 30%),
+        linear-gradient(90deg, rgba(7, 10, 18, 0.60) 0%, rgba(7, 10, 18, 0.36) 48%, rgba(7, 10, 18, 0.42) 100%),
+        linear-gradient(180deg, rgba(7, 10, 18, 0.08) 0%, rgba(7, 10, 18, 0.60) 100%);
+    }
+
+    .grid-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent 82%);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .glass-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+    
+    .glass-input:focus {
+      border-color: #38BDF8;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #FFFFFF 0%, #BAE6FD 34%, #C4B5FD 68%, #FDE68A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .neon-border {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .neon-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(120deg, transparent, rgba(56,189,248,0.85), rgba(139,92,246,0.85), transparent);
+      z-index: -1;
+      animation: borderMove 5s linear infinite;
+    }
+
+    @keyframes borderMove {
+      0% { transform: translateX(-55%); }
+      100% { transform: translateX(55%); }
+    }
+
+    .float-card {
+      animation: floatY 5.5s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 22s linear infinite;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .section-bg {
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.16), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,0.16), transparent 28%),
+        #070A12;
+    }
+
+    .noise::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.045;
+      background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    }
+
+    /* Modal styles */
+    .modal-backdrop {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+    }
+    .modal-content {
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-content.active {
+      transform: scale(1) translateY(0);
+    }
+  </style>
+</head>
+<body class="noise">
+  <header class="fixed top-0 left-0 right-0 z-50 px-5 md:px-10 py-5">
+    <nav class="mx-auto max-w-7xl glass rounded-full px-5 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-full bg-gradient-to-br from-sky-400 via-violet-500 to-amber-300 shadow-lg shadow-sky-500/30"></span>
+        <span class="font-black tracking-wide text-lg">AI MV Studio</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm text-slate-200">
+        <a href="#service" class="hover:text-sky-300 transition">服務內容</a>
+        <a href="#value" class="hover:text-sky-300 transition">招商亮點</a>
+        <a href="#process" class="hover:text-sky-300 transition">製作流程</a>
+        <a href="#contact" class="hover:text-sky-300 transition">合作洽詢</a>
+        <a href="#portfolio" class="hover:text-sky-300 transition">作品展示</a>
+      </div>
+      <button onclick="openFormModal('', '')" class="rounded-full bg-white text-slate-950 px-5 py-2.5 text-sm font-bold hover:bg-sky-200 transition">立即合作</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="relative min-h-screen overflow-hidden flex items-center px-6 md:px-10">
+      <div class="hero-video-wrap" aria-hidden="true">
+        <iframe
+          src="https://www.youtube.com/embed/LwLXRVJvMN0?autoplay=1&mute=1&controls=0&loop=1&playlist=LwLXRVJvMN0&playsinline=1&rel=0&modestbranding=1&showinfo=0&disablekb=1"
+          title="AI MV Background Video"
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="grid-glow"></div>
+
+      <div class="relative z-10 mx-auto max-w-7xl w-full pt-28 grid lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-3 glass rounded-full px-4 py-2 mb-7 text-sm text-sky-100">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-300"></span>
+            </span>
+            AI Video Production｜Music Video｜Brand Storytelling
+          </div>
+
+          <h1 class="text-5xl md:text-7xl xl:text-8xl font-black leading-[0.96] tracking-tight mb-7">
+            用 AI 影像<br />打造下一支<br />
+            <span class="gradient-text">爆款音樂 MV</span>
+          </h1>
+
+          <p class="max-w-2xl text-lg md:text-xl text-slate-200 leading-relaxed mb-9">
+            從歌曲概念、視覺腳本、角色風格、AI 影像生成到後期剪輯，打造兼具話題性、品牌感與社群傳播力的 AI MV 製作服務，協助歌手、品牌、活動與內容團隊快速放大聲量。
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-12">
+            <button onclick="openFormModal('', '')" class="neon-border rounded-full bg-sky-400 text-slate-950 px-8 py-4 text-center font-black hover:scale-105 transition duration-300">
+              預約招商簡報
+            </button>
+            <a href="#service" class="rounded-full glass px-8 py-4 text-center font-bold text-white hover:bg-white/15 transition">
+              查看製作方案
+            </a>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 max-w-2xl">
+            <div class="glass rounded-3xl p-5">
+              <p class="text-3xl font-black text-white">3X</p>
+              <p class="text-sm text-slate-300 mt-1">內容產製效率</p>
+            </div>
+            <div class="glass rounded-3xl p-5">
+              <p class="text-3xl font-black text-white">4K</p>
+              <p class="text-sm text-slate-300 mt-1">高質感視覺輸出</p>
+            </div>
+            <div class="glass rounded-3xl p-5">
+              <p class="text-3xl font-black text-white">360°</p>
+              <p class="text-sm text-slate-300 mt-1">品牌影音包裝</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hidden lg:block">
+          <div class="float-card glass rounded-[2rem] p-6 border border-white/15">
+            <div class="aspect-[4/5] rounded-[1.5rem] bg-gradient-to-br from-slate-900 via-sky-950 to-violet-950 p-5 flex flex-col justify-between overflow-hidden relative">
+              <div class="absolute -top-24 -right-24 w-64 h-64 bg-sky-400/30 blur-3xl rounded-full"></div>
+              <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div class="relative">
+                <p class="text-sm text-sky-200 font-semibold">AI MV PRODUCTION PACKAGE</p>
+                <h2 class="text-4xl font-black mt-3 leading-tight">Concept<br />to Viral<br />Visual</h2>
+              </div>
+              <div class="relative space-y-3">
+                <div class="flex justify-between border-b border-white/10 pb-3 text-sm">
+                  <span class="text-slate-300">視覺策略</span><span class="font-bold">Included</span>
+                </div>
+                <div class="flex justify-between border-b border-white/10 pb-3 text-sm">
+                  <span class="text-slate-300">AI 影像生成</span><span class="font-bold">Included</span>
+                </div>
+                <div class="flex justify-between border-b border-white/10 pb-3 text-sm">
+                  <span class="text-slate-300">剪輯調色後製</span><span class="font-bold">Included</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="relative py-6 overflow-hidden border-y border-white/10 bg-white/5">
+      <div class="marquee gap-8 text-sm md:text-base font-bold text-slate-200 uppercase tracking-[0.28em]">
+        <span>AI MUSIC VIDEO</span><span>BRAND FILM</span><span>VIRTUAL IDOL</span><span>SOCIAL CAMPAIGN</span><span>COMMERCIAL VISUAL</span><span>AI STORYBOARD</span>
+        <span>AI MUSIC VIDEO</span><span>BRAND FILM</span><span>VIRTUAL IDOL</span><span>SOCIAL CAMPAIGN</span><span>COMMERCIAL VISUAL</span><span>AI STORYBOARD</span>
+      </div>
+    </section>
+
+    <section id="service" class="section-bg py-24 px-6 md:px-10">
+      <div class="mx-auto max-w-7xl">
+        <div class="max-w-3xl mb-14">
+          <p class="text-sky-300 font-bold tracking-[0.25em] uppercase mb-4">Service</p>
+          <h2 class="text-4xl md:text-6xl font-black leading-tight mb-5">不只是生成影片，<br />而是打造能被記住的視覺作品。</h2>
+          <p class="text-slate-300 text-lg leading-relaxed">以商業目標為核心，結合 AI 生成技術、影像美術、品牌敘事與社群行銷，讓 MV 成為品牌招商、藝人宣傳與活動曝光的內容資產。</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="glass rounded-[2rem] p-7 hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-sky-400/20 flex items-center justify-center text-2xl mb-6 text-sky-300">✦</div>
+            <h3 class="text-xl font-black mb-3 text-white">AI MV 視覺企劃</h3>
+            <p class="text-slate-300 leading-relaxed text-sm">歌曲情緒 analysis、視覺風格定位、角色設定、分鏡腳本與整體美術方向。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7 hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-violet-400/20 flex items-center justify-center text-2xl mb-6 text-violet-300">◎</div>
+            <h3 class="text-xl font-black mb-3 text-white">AI 影像生成製作</h3>
+            <p class="text-slate-300 leading-relaxed text-sm">依據分鏡產出高質感影像片段，包含人物、場景、動態與概念視覺。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7 hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-400/20 flex items-center justify-center text-2xl mb-6 text-cyan-300">◆</div>
+            <h3 class="text-xl font-black mb-3 text-white">後期剪輯與包裝</h3>
+            <p class="text-slate-300 leading-relaxed text-sm">節奏剪輯、轉場、調色、字幕、Logo 動畫與社群短影音版本延伸。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7 hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-amber-300/20 flex items-center justify-center text-2xl mb-6 text-amber-300">✺</div>
+            <h3 class="text-xl font-black mb-3 text-white">招商內容素材包</h3>
+            <p class="text-slate-300 leading-relaxed text-sm">提供招商簡報視覺、預告短片、社群宣傳圖與合作提案素材。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="value" class="py-24 px-6 md:px-10 bg-[#050816]">
+      <div class="mx-auto max-w-7xl grid lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <p class="text-violet-300 font-bold tracking-[0.25em] uppercase mb-4">Why Invest</p>
+          <h2 class="text-4xl md:text-6xl font-black leading-tight mb-6">AI MV 正在成為<br />內容商業化的新入口。</h2>
+          <p class="text-slate-300 text-lg leading-relaxed mb-8">相較傳統拍攝，AI MV 可用更彈性的預算、更快的週期與更高的視覺想像力，創造具有話題性的音樂影像、品牌短片與跨界合作內容。</p>
+          <button onclick="openFormModal('', '')" class="inline-flex rounded-full bg-gradient-to-r from-sky-300 to-violet-400 text-slate-950 px-8 py-4 font-black hover:scale-105 transition">成為合作夥伴</button>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="glass rounded-[2rem] p-7">
+            <p class="text-5xl font-black gradient-text mb-4">01</p>
+            <h3 class="text-xl font-black mb-3 text-white">降低製作門檻</h3>
+            <p class="text-slate-300 text-sm">不用大型拍攝團隊，也能完成具電影感與概念性的音樂視覺。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7 mt-0 sm:mt-10">
+            <p class="text-5xl font-black gradient-text mb-4">02</p>
+            <h3 class="text-xl font-black mb-3 text-white">提高創意彈性</h3>
+            <p class="text-slate-300 text-sm">科幻、奇幻、未來城市、虛擬角色等高成本場景皆可視覺化。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7">
+            <p class="text-5xl font-black gradient-text mb-4">03</p>
+            <h3 class="text-xl font-black mb-3 text-white">放大社群聲量</h3>
+            <p class="text-slate-300 text-sm">將 MV 延伸成 Reels、Shorts、TikTok 與招商短版素材。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7 mt-0 sm:mt-10">
+            <p class="text-5xl font-black gradient-text mb-4">04</p>
+            <h3 class="text-xl font-black mb-3 text-white">創造合作場景</h3>
+            <p class="text-slate-300 text-sm">適合唱片宣傳、品牌聯名、活動主視覺與 IP 內容開發。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="section-bg py-24 px-6 md:px-10">
+      <div class="mx-auto max-w-7xl">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <p class="text-sky-300 font-bold tracking-[0.25em] uppercase mb-4">Process</p>
+          <h2 class="text-4xl md:text-6xl font-black leading-tight">四階段完成 AI MV 商業製作</h2>
+        </div>
+
+        <div class="relative grid md:grid-cols-4 gap-5">
+          <div class="glass rounded-[2rem] p-7">
+            <span class="text-sky-300 font-black">STEP 01</span>
+            <h3 class="text-2xl font-black mt-5 mb-3 text-white">需求訪談</h3>
+            <p class="text-slate-300 text-sm">確認歌曲風格、目標受眾、品牌調性與預算範圍。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7">
+            <span class="text-sky-300 font-black">STEP 02</span>
+            <h3 class="text-2xl font-black mt-5 mb-3 text-white">腳本企劃</h3>
+            <p class="text-slate-300 text-sm">制定視覺概念、分鏡節奏、人物設定與影像 moodboard。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7">
+            <span class="text-sky-300 font-black">STEP 03</span>
+            <h3 class="text-2xl font-black mt-5 mb-3 text-white">AI 製作</h3>
+            <p class="text-slate-300 text-sm">生成影像片段，進行畫面統一、動態優化與素材管理。</p>
+          </div>
+          <div class="glass rounded-[2rem] p-7">
+            <span class="text-sky-300 font-black">STEP 04</span>
+            <h3 class="text-2xl font-black mt-5 mb-3 text-white">交付宣傳</h3>
+            <p class="text-slate-300 text-sm">完成正片、短影音、招商素材與社群發布版本。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-10 bg-[#050816]">
+      <div class="mx-auto max-w-7xl glass rounded-[2.5rem] p-8 md:p-14 grid lg:grid-cols-[0.85fr_1.15fr] gap-12 items-center">
+        <div>
+          <p class="text-amber-200 font-bold tracking-[0.25em] uppercase mb-4">Packages</p>
+          <h2 class="text-4xl md:text-5xl font-black leading-tight mb-5 text-white">招商合作方案</h2>
+          <p class="text-slate-300 leading-relaxed mb-6">可依照音樂人、品牌方、活動單位 or 代理商需求，規劃單支 MV、系列影像、聯名內容與長期製作合作。</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="rounded-[2rem] bg-white/5 border border-white/10 p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-black mb-2 text-white">Starter</h3>
+              <p class="text-slate-400 text-xs mb-6">適合單曲宣傳與概念短片</p>
+              <p class="text-3xl font-black mb-6 text-sky-300">短版 MV</p>
+              <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                <li>・30-60 秒精緻影像</li>
+                <li>・基礎分鏡企劃與氛圍</li>
+                <li>・社群直式/橫式版本輸出</li>
+              </ul>
+            </div>
+            <button onclick="openFormModal('Starter (短版MV)', '我們希望能了解短版 MV 的細節規劃')" class="w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-sm font-bold transition">了解方案</button>
+          </div>
+          <div class="rounded-[2rem] bg-gradient-to-b from-sky-400/20 to-violet-500/20 border border-sky-300/30 p-6 md:scale-105 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-black mb-2 text-white">Professional</h3>
+              <p class="text-slate-200 text-xs mb-6">適合正式發行與品牌合作</p>
+              <p class="text-3xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-violet-300">完整 MV</p>
+              <ul class="space-y-3 text-xs text-slate-200 mb-8">
+                <li>・完整 3-4 分鐘視覺腳本</li>
+                <li>・全 AI 高階影像生成</li>
+                <li>・專業剪輯、調色、動態後製</li>
+                <li>・全套社群宣傳素材包</li>
+              </ul>
+            </div>
+            <button onclick="openFormModal('Professional (完整MV)', '想進一步與製作人預約完整 MV 招商簡報與方案細節。')" class="w-full py-3 rounded-full bg-gradient-to-r from-sky-400 to-violet-500 hover:opacity-90 text-slate-950 font-black text-sm shadow-lg shadow-sky-500/20 transition">立即諮詢</button>
+          </div>
+          <div class="rounded-[2rem] bg-white/5 border border-white/10 p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-black mb-2 text-white">Partner</h3>
+              <p class="text-slate-400 text-xs mb-6">適合長期內容與招商合作</p>
+              <p class="text-3xl font-black mb-6 text-violet-300">系列合作</p>
+              <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                <li>・多支影片年度包套規劃</li>
+                <li>・品牌聯名跨界視覺策略</li>
+                <li>・活動現場主視覺延伸設計</li>
+                <li>・客製化合夥人報價與授權</li>
+              </ul>
+            </div>
+            <button onclick="openFormModal('Partner (系列合作)', '我有長期品牌影音或系列合作企劃需求，希望了解合夥人方案。')" class="w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-sm font-bold transition">合作聯絡</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 串接了 Google 表單的底層聯絡區塊 -->
+    <section id="contact" class="relative py-28 px-6 md:px-10 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-sky-500/10 via-[#070A12] to-violet-600/10"></div>
+      <div class="relative mx-auto max-w-5xl text-center">
+        <p class="text-sky-200 font-bold tracking-[0.25em] uppercase mb-5">Contact</p>
+        <h2 class="text-5xl md:text-7xl font-black leading-tight mb-7 text-white">讓你的音樂，<br />被世界看見。</h2>
+        <p class="text-slate-300 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10">無論你是歌手、品牌、經紀公司、活動策展或內容代理商，我們都能協助你用 AI MV 打造更具話題性的視覺作品與招商素材。</p>
+
+        <!-- 將主頁洽詢直球串接到真實 Google Form -->
+        <form class="glass rounded-[2rem] p-5 md:p-7 grid md:grid-cols-[1fr_1fr_auto] gap-4 text-left" id="mainContactForm">
+          <input id="main_name" class="rounded-full bg-white/5 border border-white/10 px-6 py-4 outline-none focus:border-sky-300 focus:bg-white/10 placeholder:text-slate-400 text-white transition" type="text" placeholder="您的姓名 / 公司" required />
+          <input id="main_email" class="rounded-full bg-white/5 border border-white/10 px-6 py-4 outline-none focus:border-sky-300 focus:bg-white/10 placeholder:text-slate-400 text-white transition" type="email" placeholder="Email / 聯絡方式" required />
+          <button type="submit" id="mainContactBtn" class="rounded-full bg-white text-slate-950 px-8 py-4 font-black hover:bg-sky-200 transition">送出洽詢</button>
+        </form>
+
+        <p class="text-slate-400 text-sm mt-5 flex items-center justify-center gap-1">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+          您的資料將安全地提交並由專人 24 小時內回覆。
+        </p>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section-bg py-24 px-6 md:px-10">
+      <div class="mx-auto max-w-7xl">
+        <div class="max-w-3xl mx-auto text-center mb-12">
+          <p class="text-sky-300 font-bold tracking-[0.25em] uppercase mb-4">Portfolio</p>
+          <h2 class="text-4xl md:text-5xl font-black leading-tight text-white">短影音作品展示</h2>
+          <p class="text-slate-300 text-sm md:text-base leading-relaxed mt-4">純畫面預覽、靜音自動播放、循環播放，展示強大的社群短影音視覺。請點擊影片與我們直接開啟洽談！</p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          <div class="glass rounded-[2rem] overflow-hidden border border-white/10 bg-[#050816] group cursor-pointer" onclick="openFormModal('品牌合作', '我在 Portfolio 區塊看見【VOBO 皮鞋】作品，想了解類似風格的動態視覺規劃與預算')">
+            <div class="aspect-[9/16] bg-black relative">
+              <iframe class="w-full h-full" src="https://www.youtube.com/embed/h7hM5BlOcMY?autoplay=1&mute=1&loop=1&playlist=h7hM5BlOcMY&controls=0&modestbranding=1&rel=0&playsinline=1" title="VOBO皮鞋" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300">
+                <span class="px-5 py-2.5 bg-sky-400 text-slate-950 font-black rounded-full text-xs flex items-center gap-1 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 洽詢同款風格
+                </span>
+              </div>
+            </div>
+            <div class="p-5 flex justify-between items-center bg-slate-950/40">
+              <p class="text-sm uppercase tracking-[0.2em] text-slate-300 font-semibold">VOBO 皮鞋 - 質感 AI 製品</p>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-sky-300 transition"></i>
+            </div>
+          </div>
+          
+          <div class="glass rounded-[2rem] overflow-hidden border border-white/10 bg-[#050816] group cursor-pointer" onclick="openFormModal('品牌合作', '我在 Portfolio 區塊看見【SHARK 鯊克防水鞋】作品，想諮詢商品特效與科幻寫實風格的報價。')">
+            <div class="aspect-[9/16] bg-black relative">
+              <iframe class="w-full h-full" src="https://www.youtube.com/embed/bcFnNsTVntk?autoplay=1&mute=1&loop=1&playlist=bcFnNsTVntk&controls=0&modestbranding=1&rel=0&playsinline=1" title="SHARK 鯊克防水鞋" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300">
+                <span class="px-5 py-2.5 bg-sky-400 text-slate-950 font-black rounded-full text-xs flex items-center gap-1 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 洽詢同款風格
+                </span>
+              </div>
+            </div>
+            <div class="p-5 flex justify-between items-center bg-slate-950/40">
+              <p class="text-sm uppercase tracking-[0.2em] text-slate-300 font-semibold">SHARK 鯊克防水鞋 - 潮流科幻</p>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-sky-300 transition"></i>
+            </div>
+          </div>
+
+          <div class="glass rounded-[2rem] overflow-hidden border border-white/10 bg-[#050816] group cursor-pointer" onclick="openFormModal('品牌合作', '我在 Portfolio 區塊看見【黑武士鞋】作品，想知道這類未來感賽博龐克風格的 AI 影片製作時程與合約。')">
+            <div class="aspect-[9/16] bg-black relative">
+              <iframe class="w-full h-full" src="https://www.youtube.com/embed/n9VTjZdNvEQ?autoplay=1&mute=1&loop=1&playlist=n9VTjZdNvEQ&controls=0&modestbranding=1&rel=0&playsinline=1" title="黑武士鞋" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300">
+                <span class="px-5 py-2.5 bg-sky-400 text-slate-950 font-black rounded-full text-xs flex items-center gap-1 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 洽詢同款風格
+                </span>
+              </div>
+            </div>
+            <div class="p-5 flex justify-between items-center bg-slate-950/40">
+              <p class="text-sm uppercase tracking-[0.2em] text-slate-300 font-semibold">黑武士鞋 - 賽博未來</p>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-sky-300 transition"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 bg-[#050816] px-6 md:px-10 py-10">
+    <div class="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-5 text-sm text-slate-400">
+      <p>© 2026 AI MV Studio. All rights reserved.</p>
+      <div class="flex items-center gap-5">
+        <a href="#" class="hover:text-white transition">Instagram</a>
+        <a href="#" class="hover:text-white transition">YouTube</a>
+        <a href="#" class="hover:text-white transition">Business</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= 核心升級：精美彈出式聯絡表單 Modal (串接 Google Forms) ================= -->
+  <div id="formModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 invisible pointer-events-none">
+    <!-- Backdrop -->
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/75 backdrop-blur-md modal-backdrop" onclick="closeFormModal()"></div>
+    
+    <!-- Modal Box -->
+    <div id="modalContent" class="relative w-full max-w-xl glass rounded-[2.5rem] p-6 md:p-9 z-10 modal-content overflow-hidden max-h-[90vh] overflow-y-auto">
+      <div class="absolute -top-16 -left-16 w-44 h-44 bg-sky-500/20 rounded-full blur-2xl"></div>
+      <div class="absolute -bottom-16 -right-16 w-44 h-44 bg-violet-500/20 rounded-full blur-2xl"></div>
+
+      <!-- Close Button -->
+      <button onclick="closeFormModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/15 transition text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="relative">
+        <div class="flex items-center gap-2 text-sky-400 mb-2">
+          <i data-lucide="sparkles" class="w-5 h-5 animate-pulse"></i>
+          <span class="text-xs uppercase tracking-[0.25em] font-black">AI MV Studio</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-black text-white mb-2">預約您的 AI MV 製作洽詢</h3>
+        <p class="text-slate-300 text-sm mb-6">我們將在收到後安排視覺總監與您直接對接，請填寫下方關鍵資訊。</p>
+
+        <!-- 這裡放入解析後的 Google Form 欄位 -->
+        <!-- 注意：下方 action 中的 YOUR_GOOGLE_FORM_ID_HERE 必須手動替換成您真實的 Google 表單 ID！ -->
+        <form id="googleFormSubmit" target="hidden_iframe" action="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID_HERE/formResponse" method="POST" onsubmit="return handleFormSubmission()">
+          
+          <div class="space-y-4">
+            <!-- 姓名 -->
+            <div>
+              <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2" for="entry_name">您的姓名 / 團隊名稱 *</label>
+              <div class="relative">
+                <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input class="w-full rounded-full pl-11 pr-5 py-3 text-sm glass-input outline-none" type="text" id="entry_name" name="entry.1779694841" placeholder="例如：張小明 / 聲浪唱片" required />
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2" for="entry_email">Email / 聯絡方式 *</label>
+              <div class="relative">
+                <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input class="w-full rounded-full pl-11 pr-5 py-3 text-sm glass-input outline-none" type="email" id="entry_email" name="entry.66285000" placeholder="例如：example@domain.com" required />
+              </div>
+            </div>
+
+            <!-- 企劃類型 -->
+            <div>
+              <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2" for="entry_type">預期合作類型 *</label>
+              <div class="relative">
+                <i data-lucide="film" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <select class="w-full rounded-full pl-11 pr-5 py-3 text-sm glass-input outline-none appearance-none cursor-pointer" id="entry_type" name="entry.45759550" required>
+                  <option value="" disabled selected class="bg-slate-900">請選擇您的主要需求...</option>
+                  <option value="AI MV 視覺企劃與完整製作" class="bg-slate-900">AI MV 視覺企劃與完整製作</option>
+                  <option value="品牌形象 / 商業廣告影片" class="bg-slate-900">品牌形象 / 商業廣告影片</option>
+                  <option value="短期宣傳 / 直式社群短影音" class="bg-slate-900">短期宣傳 / 直式社群短影音</option>
+                  <option value="長期招商合作 / 跨界聯名合夥人" class="bg-slate-900">長期招商合作 / 跨界聯名合夥人</option>
+                </select>
+                <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"></i>
+              </div>
+            </div>
+
+            <!-- 需求簡述 -->
+            <div>
+              <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2" for="entry_desc">需求簡述 / 想要達到的效果 *</label>
+              <div class="relative">
+                <i data-lucide="message-square" class="absolute left-4 top-4 w-4 h-4 text-slate-400"></i>
+                <textarea class="w-full rounded-3xl pl-11 pr-5 py-3.5 text-sm glass-input outline-none min-h-[90px] resize-none" id="entry_desc" name="entry.45765567" placeholder="請簡短描述您的新歌風格、故事理念或希望置入的品牌產品特色..." required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit button inside modal -->
+          <div class="mt-6 flex flex-col items-center">
+            <button type="submit" id="modalSubmitBtn" class="w-full rounded-full bg-gradient-to-r from-sky-400 via-violet-500 to-amber-300 text-slate-950 font-black py-4 hover:opacity-90 transform hover:scale-[1.02] transition shadow-lg shadow-sky-500/10 flex items-center justify-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i> 送出預約申請
+            </button>
+            <p class="text-[10px] text-slate-400 mt-3">送出代表您同意本工作室將以信件方式進行新案預約對接。</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 用來接 Google 表單提交後跳轉之用，放在網頁隱藏處 -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessAlert(); }"></iframe>
+
+  <!-- 成功送出提示 Modal -->
+  <div id="successModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 invisible pointer-events-none">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-sm glass rounded-[2.5rem] p-8 text-center z-10 border border-emerald-500/20">
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
+        <i data-lucide="check-circle" class="w-8 h-8 text-emerald-400"></i>
+      </div>
+      <h3 class="text-2xl font-black text-white mb-2">預約提交成功！</h3>
+      <p class="text-slate-300 text-sm leading-relaxed mb-6">我們已收到您的問卷需求，AI 視覺專員將於 24 小時內以 Email 與您取得聯繫，一同引爆全新創意！</p>
+      <button onclick="closeSuccessModal()" class="w-full py-3.5 rounded-full bg-white text-slate-950 font-bold text-sm hover:bg-slate-200 transition">好的，我知道了</button>
+    </div>
+  </div>
+
+  <script>
+    // 追蹤表單是否已被送出
+    var submitted = false;
+
+    document.addEventListener('DOMContentLoaded', function(){
+      // 初始化 Lucide 圖標
+      lucide.createIcons();
+
+      // === 優化點擊 1: 底部 Form 表單點擊時 ===
+      const mainForm = document.getElementById('mainContactForm');
+      if (mainForm) {
+        mainForm.addEventListener('submit', function(e) {
+          e.preventDefault(); // 防止傳統表單提交重新加載
+          
+          // 讀取主頁輸入值
+          const nameVal = document.getElementById('main_name')?.value || '';
+          const emailVal = document.getElementById('main_email')?.value || '';
+          
+          // 開啟 Modal，將輸入的值自動灌進 Modal 裡面，避免使用者填兩次！
+          openFormModal('', '', nameVal, emailVal);
+        });
+      }
+    });
+
+    // === 控制表單彈窗邏輯 ===
+    const modal = document.getElementById('formModal');
+    const backdrop = document.getElementById('modalBackdrop');
+    const content = document.getElementById('modalContent');
+    const successModal = document.getElementById('successModal');
+
+    // 開啟預約表單，可代入方案名稱與預設敘述
+    function openFormModal(planName = '', defaultDesc = '', prepopulateName = '', prepopulateEmail = '') {
+      // 關鍵修復：移出 invisible 以及禁用點擊的 pointer-events-none 樣式類別
+      modal.classList.remove('invisible', 'pointer-events-none');
+      
+      setTimeout(() => {
+        backdrop.classList.add('active');
+        content.classList.add('active');
+      }, 50);
+
+      // 如果有事先填姓名或 Email，灌入表單中
+      if (prepopulateName) {
+        document.getElementById('entry_name').value = prepopulateName;
+      }
+      if (prepopulateEmail) {
+        document.getElementById('entry_email').value = prepopulateEmail;
+      }
+
+      // 如果有選擇方案，幫他把 Select 選單帶上
+      if (planName) {
+        const select = document.getElementById('entry_type');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(planName) || planName.includes(select.options[i].value)) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      // 如果有預設說明，塞入 Textarea 中
+      if (defaultDesc) {
+        document.getElementById('entry_desc').value = defaultDesc;
+      }
+    }
+
+    // 關閉表單
+    function closeFormModal() {
+      backdrop.classList.remove('active');
+      content.classList.remove('active');
+      setTimeout(() => {
+        // 關鍵修復：關閉後重新加回 invisible 與 pointer-events-none，防止隱形遮擋
+        modal.classList.add('invisible', 'pointer-events-none');
+      }, 300);
+    }
+
+    // 當 Modal 內 Form 被按下送出時
+    function handleFormSubmission() {
+      const form = document.getElementById('googleFormSubmit');
+      const actionUrl = form.getAttribute('action');
+
+      // 安全防呆校驗機制：如果使用者忘記替換 ID 
+      if (actionUrl.includes('YOUR_GOOGLE_FORM_ID_HERE')) {
+        alert('【請先設定您的 Google 表單 ID】\n\n您需要將代碼中的 "YOUR_GOOGLE_FORM_ID_HERE" 替換成您真實的 Google 表單 ID，後台才能順利收集到資料！');
+        return false; // 阻擋表單送出
+      }
+
+      submitted = true; // 設定送出開關，觸發隱藏 iframe onload 執行成功畫面
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> 正在提交中...';
+        lucide.createIcons();
+      }
+      return true;
+    }
+
+    // 當隱藏 iframe 監聽到載入時（代表 Google Form 成功接收到 POST 資料）
+    function showSuccessAlert() {
+      closeFormModal();
+      
+      // 開啟成功彈窗，移除 pointer-events-none 使按鈕可被點擊
+      successModal.classList.remove('invisible', 'pointer-events-none');
+      setTimeout(() => {
+        successModal.querySelector('.glass').style.transform = 'scale(1)';
+        successModal.querySelector('.glass').style.opacity = '1';
+      }, 50);
+
+      // 恢復提交按鈕狀態
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> 送出預約申請';
+        lucide.createIcons();
+      }
+
+      // 重置欄位與狀態
+      document.getElementById('googleFormSubmit').reset();
+      document.getElementById('mainContactForm').reset();
+      submitted = false;
+    }
+
+    // 關閉成功通知視窗
+    function closeSuccessModal() {
+      successModal.classList.add('invisible', 'pointer-events-none');
+    }
+  </script>
+</body>
+</html>

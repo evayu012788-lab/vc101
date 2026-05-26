@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eva-AIMV 聯絡表單 - 備援表單</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f2f4f8;margin:0;padding:24px}
+    .card{max-width:760px;margin:20px auto;padding:20px;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(10,20,40,0.06)}
+    label{display:block;margin-top:12px;font-weight:600}
+    input[type=text],input[type=email],select,textarea{width:100%;padding:10px;border:1px solid #d6d9de;border-radius:6px;margin-top:6px;font-size:14px}
+    textarea{min-height:140px}
+    .actions{margin-top:14px;display:flex;gap:10px;align-items:center}
+    button{background:#5746e3;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer}
+    .secondary{background:transparent;color:#5746e3;border:1px solid #d6d9de}
+    .msg{margin-top:12px;color:#0b6a43}
+    .error{color:#b00020}
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-labelledby="formTitle">
+    <h2 id="formTitle">Eva-AIMV 聯絡表單（備援）</h2>
+    <p>若原始 Google 表單無法提交，可使用此備援表單，資料會送到本機示範後端。</p>
+
+    <form id="contactForm" novalidate>
+      <label for="name">姓名 <span aria-hidden="true">*</span></label>
+      <input id="name" name="name" type="text" required aria-required="true" aria-describedby="nameHelp">
+      <div id="nameHelp" class="sr-only" style="display:none">請輸入姓名</div>
+
+      <label for="email">Email <span aria-hidden="true">*</span></label>
+      <input id="email" name="email" type="email" required aria-required="true">
+
+      <label for="projectType">企劃類型</label>
+      <select id="projectType" name="projectType">
+        <option value="">請選擇</option>
+        <option>活動/演出</option>
+        <option>行銷/宣傳</option>
+        <option>影像/多媒體</option>
+        <option>其他</option>
+      </select>
+
+      <label for="message">需求簡述</label>
+      <textarea id="message" name="message" placeholder="請簡述您的需求或預算、時程等"></textarea>
+
+      <label style="margin-top:12px;display:flex;align-items:center;gap:8px"><input id="submitToGoogle" type="checkbox" checked> 同步送出至 Google 表單</label>
+
+      <div class="actions">
+        <button type="submit">送出</button>
+        <button type="button" class="secondary" id="openOriginal">開啟原始表單</button>
+      </div>
+
+      <div id="status" class="msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('status');
+    document.getElementById('openOriginal').addEventListener('click', ()=>{
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSfO1UfARZ4Q-9F5hACcN1M1eiD-TmgJFV8qj4QSMTIqf2stjA/viewform','_blank');
+    });
+
+    function validate(){
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      if(!name){status.textContent='請輸入姓名';status.className='error';return false}
+      if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){status.textContent='請輸入有效的 Email';status.className='error';return false}
+      return true
+    }
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      status.textContent='';
+      if(!validate()) return;
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        projectType: form.projectType.value,
+        message: form.message.value.trim()
+      };
+
+      const sendToGoogle = document.getElementById('submitToGoogle').checked;
+
+      if(sendToGoogle){
+        // Google 表單 action 與 entry id（由使用者/解析結果提供）
+        const googleAction = 'https://docs.google.com/forms/d/e/1FAIpQLScyvI98_7N6-G9N-6Y_3N6-Zg4-E_BxoG2A5W9o_7T-u-A5Qw/formResponse';
+        const entries = {
+          'entry.1779694841': payload.name,
+          'entry.66285000': payload.email,
+          'entry.45759550': payload.projectType,
+          'entry.45765567': payload.message
+        };
+
+        // 使用隱藏 iframe 提交以避開 CORS
+        const iframeName = 'gf_hidden_iframe';
+        let iframe = document.querySelector('iframe[name="' + iframeName + '"]');
+        if(!iframe){
+          iframe = document.createElement('iframe');
+          iframe.name = iframeName; iframe.style.display='none'; document.body.appendChild(iframe);
+        }
+
+        const gform = document.createElement('form');
+        gform.action = googleAction; gform.method = 'POST'; gform.target = iframeName; gform.style.display='none';
+        for(const k in entries){
+          const inp = document.createElement('input'); inp.type='hidden'; inp.name=k; inp.value=entries[k] || '';
+          gform.appendChild(inp);
+        }
+        document.body.appendChild(gform);
+        gform.submit();
+        status.textContent = '已送出至 Google 表單（如果未成功顯示，請開啟原表單）。'; status.className='msg';
+        form.reset();
+        // 清理
+        setTimeout(()=>{document.body.removeChild(gform);},1500);
+        return;
+      }
+
+      // 否則送到本機後端
+      try{
+        const res = await fetch('http://localhost:3000/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        if(res.ok){status.textContent='感謝，我們已收到您的訊息（後端）。';status.className='msg';form.reset()}else{const t=await res.text();status.textContent='送出失敗: '+t;status.className='error'}}catch(err){status.textContent='無法連線至後端，請確認伺服器已啟動或啟用「同步送出至 Google 表單」。';status.className='error'}
+    });
+
+    // 解析 query string 做預填與自動送出
+    (function(){
+      try{
+        const params = new URLSearchParams(window.location.search);
+        const qName = params.get('name');
+        const qEmail = params.get('email');
+        const qProject = params.get('projectType');
+        const qMessage = params.get('message');
+        const qAuto = params.get('autosubmit');
+        if(qName) form.name.value = decodeURIComponent(qName);
+        if(qEmail) form.email.value = decodeURIComponent(qEmail);
+        if(qProject) form.projectType.value = decodeURIComponent(qProject);
+        if(qMessage) form.message.value = decodeURIComponent(qMessage);
+
+        // 若 URL 指定 autosubmit=1，稍後自動提交（預設優先送 Google）
+        if(qAuto === '1'){
+          // 確保 Google 同步勾選（如需改動可移除）
+          const googleChk = document.getElementById('submitToGoogle');
+          if(googleChk) googleChk.checked = true;
+          // 延遲提交以讓 DOM 與隱藏 iframe 建立
+          setTimeout(()=>{
+            if(typeof form.requestSubmit === 'function'){
+              form.requestSubmit();
+            }else{
+              // fallback
+              const btn = document.querySelector('#contactForm button[type="submit"]');
+              if(btn) btn.click();
+            }
+          }, 600);
+        }
+      }catch(e){console.warn('prefill error',e)}
+    })();
+  </script>
+</body>
+</html>
